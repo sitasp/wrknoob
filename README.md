@@ -102,7 +102,7 @@ Save Report to CSV? [y/n]: y
 ## 🧑‍💻 Actual Output in my PC
 
 ```
-(wrknoob-env) satishpatra@Satishs-MacBook-Pro raxati-side % python wrknoob.py
+(wrknoob-env) satishpatra@Satishs-MacBook-Pro documents % python wrknoob.py
 
 Matplotlib is building the font cache; this may take a moment.
 Enter the target URL (http://localhost:8080/hello): http://localhost:8080/hello
