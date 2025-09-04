@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wrknoob"
+version = "0.1.0"
+authors = [
+  { name="Satish Patra", email="satish.patra@protonmail.com" },
+]
+description = "A simple CLI tool"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "matplotlib",
+    "rich",
+]
+
+[project.scripts]
+wrknoob = "wrknoob.wrknoob:main"
+
+[project.urls]
+"Homepage" = "https://github.com/sitasp/wrknoob"
+"Bug Tracker" = "https://github.com/sitasp/wrknoob/issues"

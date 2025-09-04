@@ -1,3 +1,20 @@
+Metadata-Version: 2.4
+Name: wrknoob
+Version: 0.1.0
+Summary: A simple CLI tool
+Author-email: Satish Patra <satish.patra@protonmail.com>
+Project-URL: Homepage, https://github.com/sitasp/wrknoob
+Project-URL: Bug Tracker, https://github.com/sitasp/wrknoob/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: matplotlib
+Requires-Dist: rich
+Dynamic: license-file
+
 # 🧪 wrknoob — Noob-Friendly Load Testing CLI for `wrk`
 
 `wrknoob` is a Python CLI tool that helps you run structured load tests using [`wrk`](https://github.com/wg/wrk), visualize results with pretty graphs and tables, and export reports — all with zero setup fuss.
@@ -139,7 +156,7 @@ Saved plot to wrk_results.png
 
 ## 📝 License
 
-MIT © 2025 [sitasp]
+MIT © 2025 [Your Name]
 
 ---
 

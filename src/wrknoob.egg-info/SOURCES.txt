@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/wrknoob/__init__.py
+src/wrknoob/wrknoob.py
+src/wrknoob.egg-info/PKG-INFO
+src/wrknoob.egg-info/SOURCES.txt
+src/wrknoob.egg-info/dependency_links.txt
+src/wrknoob.egg-info/entry_points.txt
+src/wrknoob.egg-info/requires.txt
+src/wrknoob.egg-info/top_level.txt

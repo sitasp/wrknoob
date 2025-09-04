@@ -1,6 +1,8 @@
 import subprocess
 import csv
 import re
+import argparse
+import sys
 import matplotlib.pyplot as plt
 from rich.console import Console
 from rich.table import Table
@@ -58,12 +60,24 @@ def display_table(results):
     
     console.print(table)
 
-def main():
+BANNER = r"""
+▄   ▄  ▄▄▄ █  ▄ ▄▄▄▄   ▄▄▄   ▄▄▄  ▗▖   
+█ ▄ █ █    █▄▀  █   █ █   █ █   █ ▐▌   
+█▄█▄█ █    █ ▀▄ █   █ ▀▄▄▄▀ ▀▄▄▄▀ ▐▛▀▚▖
+           █  █                   ▐▙▄▞▘
+                                       
+                                       
+"""
+
+def run_interactive():
+    print(BANNER)
+    print("Welcome to wrknoob! The tool is starting in interactive mode...")
+
     url = Prompt.ask("Enter the target URL", default="http://localhost:8080/hello")
     threads = int(Prompt.ask("Number of threads", default="8"))
     duration = int(Prompt.ask("Test duration (in seconds)", default="15"))
-    conn_list = Prompt.ask("List of concurrent connections (comma-separated)", default="25,50,100,150,200")
-    conn_list = [int(c.strip()) for c in conn_list.split(",")]
+    conn_list_str = Prompt.ask("List of concurrent connections (comma-separated)", default="25,50,100,150,200")
+    conn_list = [int(c.strip()) for c in conn_list_str.split(",")]
 
     results = []
     for connections in conn_list:
@@ -82,6 +96,50 @@ def main():
     if Confirm.ask("Do you want to plot the results?"):
         plot_results(results)
         console.print("[green]Saved plot to wrk_results.png[/green]")
+
+def run_non_interactive():
+    parser = argparse.ArgumentParser(description="A simple CLI tool to run wrk tests.")
+    parser.add_argument("url", nargs='?', default=None, help="The target URL to test.")
+    parser.add_argument("-t", "--threads", type=int, default=8, help="Number of threads to use.")
+    parser.add_argument("-d", "--duration", type=int, default=15, help="Test duration in seconds.")
+    parser.add_argument("-c", "--connections", help="List of concurrent connections (comma-separated).")
+    parser.add_argument("--save-csv", action="store_true", help="Save the results as a CSV file.")
+    parser.add_argument("--plot", action="store_true", help="Plot the results.")
+    
+    args = parser.parse_args()
+
+    if not args.url or not args.connections:
+        parser.print_help()
+        sys.exit(1)
+
+    print(BANNER)
+    print("Welcome to wrknoob! The tool is starting...")
+
+    conn_list = [int(c.strip()) for c in args.connections.split(",")]
+
+    results = []
+    for connections in conn_list:
+        console.print(f"[bold cyan]Running test with {connections} connections...[/bold cyan]")
+        output = run_wrk(connections, args.duration, args.threads, args.url)
+        parsed = parse_output(output)
+        parsed['Connections'] = connections
+        results.append(parsed)
+
+    display_table(results)
+
+    if args.save_csv:
+        save_csv(results)
+        console.print("[green]Saved results to wrk_results.csv[/green]")
+
+    if args.plot:
+        plot_results(results)
+        console.print("[green]Saved plot to wrk_results.png[/green]")
+
+def main():
+    if len(sys.argv) == 1:
+        run_interactive()
+    else:
+        run_non_interactive()
 
 if __name__ == "__main__":
     main()

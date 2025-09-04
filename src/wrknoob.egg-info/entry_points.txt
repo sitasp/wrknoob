@@ -1,0 +1,2 @@
+[console_scripts]
+wrknoob = wrknoob.wrknoob:main
