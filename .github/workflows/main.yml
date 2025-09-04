@@ -57,7 +57,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
       - name: Update version in pyproject.toml
         run: |
-          sed -i "s/^version = .*/version = \"${{ steps.version.outputs.VERSION }}\"/") pyproject.toml
+          sed -i 's/^version = .*/version = "${{ steps.version.outputs.VERSION }}"/' pyproject.toml
       - name: Build package with new version
         run: python -m build
       - name: Create and push tag
