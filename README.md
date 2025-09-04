@@ -24,58 +24,70 @@ Whether you're benchmarking a Quarkus app or a Flask toy server, `wrknoob` gives
 
 ## ⚙️ Installation
 
-### Prerequisites
+### 1. Install `wrk`
 
-- Python 3.8+
-- [`wrk`](https://github.com/wg/wrk) installed and available in your `$PATH`
+`wrknoob` uses `wrk` to run the load tests, so you need to have it installed first.
 
-> Install `wrk` via Homebrew if you're on macOS:
-> ```bash
-> brew install wrk
-> ```
+*   **macOS:**
+    ```bash
+    brew install wrk
+    ```
 
----
+*   **Linux (Debian/Ubuntu):**
+    ```bash
+    sudo apt-get update && sudo apt-get install wrk
+    ```
 
-### 1. Clone the Repository
+*   **Windows:**
+    The best way to use `wrk` on Windows is through the **Windows Subsystem for Linux (WSL)**. Once you have WSL set up, you can follow the Linux instructions.
 
-```bash
-git clone https://github.com/sitasp/wrknoob.git
-cd wrknoob
-```
+### 2. Install `wrknoob`
 
----
+The recommended way to install `wrknoob` is with `pipx`, which will install it in an isolated environment.
 
-### 2. Set Up a Virtual Environment
+*   **Install `pipx` (if you don't have it):**
+    ```bash
+    # On macOS
+    brew install pipx
+    pipx ensurepath
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+    # On Linux and Windows
+    python3 -m pip install --user pipx
+    python3 -m pipx ensurepath
+    ```
 
----
-
-### 3. Install Python Dependencies
-
-```bash
-pip install -r requirements.txt
-```
+*   **Install `wrknoob`:**
+    ```bash
+    pipx install wrknoob
+    ```
 
 ---
 
 ## 🚀 Usage
 
+Once installed, you can run `wrknoob` directly from your terminal.
+
+### Interactive Mode
+
+For an interactive session that guides you through the options, run the command without any arguments:
+
 ```bash
-python wrknoob.py
+wrknoob
 ```
 
-You’ll be prompted to enter:
+### Non-Interactive Mode
 
-- Target URL (e.g., `http://localhost:8080/hello`)
-- Duration per test
-- Number of threads
-- List of concurrent connection levels (e.g., `10,25,50,100`)
-- Whether to show graph or table
-- Whether to export report to CSV or save plot as PNG
+You can also provide all the options as command-line arguments:
+
+```bash
+wrknoob <URL> -c <CONNECTIONS> [OPTIONS]
+```
+
+**Example:**
+
+```bash
+wrknoob http://localhost:8080/hello -c 50,100,150 -t 12 -d 30 --save-csv --plot
+```
 
 ---
 
