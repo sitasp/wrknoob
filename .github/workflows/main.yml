@@ -1,0 +1,73 @@
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - dev
+      - 'release_v*'
+  pull_request:
+    branches:
+      - dev
+      - 'release_v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: python -m build
+
+  publish:
+    needs: build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release_v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # needed to push tags
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # a full history is needed for versioning
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Generate version
+        id: version
+        run: |
+          RELEASE_VERSION=$(echo ${GITHUB_REF#refs/heads/release_v} | sed 's/_/./g')
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          VERSION="$RELEASE_VERSION.$COMMIT_COUNT"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+      - name: Update version in pyproject.toml
+        run: |
+          sed -i "s/^version = .*/version = \"${{ steps.version.outputs.VERSION }}\"/") pyproject.toml
+      - name: Build package with new version
+        run: python -m build
+      - name: Create and push tag
+        run: |
+          git tag -a "${{ steps.version.outputs.VERSION }}" -m "Release ${{ steps.version.outputs.VERSION }}"
+          git push origin "${{ steps.version.outputs.VERSION }}"
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          # You need to create a secret in your repository settings called PYPI_API_TOKEN
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload dist/*
