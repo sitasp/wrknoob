@@ -145,4 +145,4 @@ MIT © 2025 [sitasp]
 
 ## 🤛 Contributing
 
-PRs welcome! If you have ideas like JSON output, REST API integration, or plotting percentiles — open an issue or fork away 🚀
+PRs welcome! If you have ideas like JSON output, REST API integration, or plotting percentiles — open an issue or fork away. 🚀
