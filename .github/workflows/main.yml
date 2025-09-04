@@ -52,8 +52,14 @@ jobs:
         id: version
         run: |
           RELEASE_VERSION=$(echo ${GITHUB_REF#refs/heads/release_v} | sed 's/_/./g')
-          COMMIT_COUNT=$(git rev-list --count HEAD)
-          VERSION="$RELEASE_VERSION.$COMMIT_COUNT"
+          git fetch --tags
+          LAST_PATCH=$(git tag -l "$RELEASE_VERSION.*" | sort -V | tail -n 1 | awk -F. '{print $3}')
+          if [ -z "$LAST_PATCH" ]; then
+            NEW_PATCH=0
+          else
+            NEW_PATCH=$((LAST_PATCH + 1))
+          fi
+          VERSION="$RELEASE_VERSION.$NEW_PATCH"
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
       - name: Update version in pyproject.toml
         run: |
