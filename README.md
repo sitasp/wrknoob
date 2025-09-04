@@ -1,5 +1,10 @@
 # 🧪 wrknoob — Noob-Friendly Load Testing CLI for `wrk`
 
+[![Build and Publish](https://github.com/sitasp/wrknoob/actions/workflows/main.yml/badge.svg)](https://github.com/sitasp/wrknoob/actions/workflows/main.yml)
+[![PyPI version](https://img.shields.io/pypi/v/wrknoob)](https://pypi.org/project/wrknoob/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python versions](https://img.shields.io/pypi/pyversions/wrknoob.svg)](https://pypi.org/project/wrknoob/)
+
 `wrknoob` is a Python CLI tool that helps you run structured load tests using [`wrk`](https://github.com/wg/wrk), visualize results with pretty graphs and tables, and export reports — all with zero setup fuss.
 
 Whether you're benchmarking a Quarkus app or a Flask toy server, `wrknoob` gives you insight into latency and throughput over varying concurrency levels.
