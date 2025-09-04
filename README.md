@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="wrknoob logo" width="150">
+</p>
+
 # 🧪 wrknoob — Noob-Friendly Load Testing CLI for `wrk`
 
 [![Build and Publish](https://github.com/sitasp/wrknoob/actions/workflows/main.yml/badge.svg)](https://github.com/sitasp/wrknoob/actions/workflows/main.yml)
